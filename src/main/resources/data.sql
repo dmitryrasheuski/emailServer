@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS contact_groups (
+    id  IDENTITY PRIMARY KEY,
+    title VARCHAR(20) NOT NULL,
+    description VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS contact (
+    id IDENTITY PRIMARY KEY,
+    email VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS contact_contact_group (
+    id_contact BIGINT NOT NULL,
+    id_group BIGINT NOT NULL,
+    FOREIGN KEY (id_contact) REFERENCES contact(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_group) REFERENCES contact_groups(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
