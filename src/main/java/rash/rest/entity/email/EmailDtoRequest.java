@@ -14,7 +14,9 @@ import lombok.SneakyThrows;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @JsonDeserialize(using = EmailDtoRequest.Deserializer.class)
@@ -36,7 +38,7 @@ public class EmailDtoRequest {
             ObjectCodec oc = p.getCodec();
             JsonNode node = oc.readTree(p);
 
-            List<String> emailReceivers = getReceiver( node.get("to") );
+            List<String> emailReceivers = getRecipients( node.get("to") );
             String subject = node.get("subject").asText();
             EmailItem content = getEmailItem( node.get("emailContent") );
 
@@ -90,18 +92,12 @@ public class EmailDtoRequest {
         }
 
 
-        List<String> getReceiver(JsonNode node) {
-            ArrayList<String> list = new ArrayList<>();
-
-            if( node.isValueNode() ) {
-
-                String receiver = node.asText();
-                list.add(receiver);
-
-            } else {
-                //TODO
-            }
-
+        List<String> getRecipients(JsonNode node) {
+            String str = node.asText();
+            String[] recipients = str.split(",");
+            List<String> list = Arrays.stream(recipients)
+                    .map(String::trim)
+                    .collect(Collectors.toList());
             return list;
         }
     }
