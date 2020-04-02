@@ -11,7 +11,7 @@ public interface ContactService {
     List<Contact> getContacts();
     List<Contact> getContacts(ContactGroup group);
     List<Contact> getContacts(String email);
+    List<Contact> getContact(Long id);
     Optional<Contact> removeContact(Contact contact);
     Optional<Contact> updateContact(Contact contact);
-
 }

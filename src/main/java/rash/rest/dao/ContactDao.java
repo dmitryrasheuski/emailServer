@@ -10,6 +10,7 @@ public interface ContactDao {
 
     Optional<Contact> addContact(Contact contact);
     Optional<Contact> getContactByEmail(String email);
+    Optional<Contact> getContactById(Long id);
     List<Contact> getContacts();
     List<Contact> getContacts(ContactGroup group);
     Optional<Contact> removeContact(Contact contact);

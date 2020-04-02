@@ -26,7 +26,7 @@ public class ContactsGroupController {
                 ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<ContactGroup>> getGroups() {
 
         List<ContactGroup> groups = contactGroupService.getAll();

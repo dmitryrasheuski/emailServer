@@ -56,6 +56,11 @@ public interface ContactDaoImpl extends CrudRepository<Contact, Long>, ContactDa
     }
 
     @Override
+    default Optional<Contact> getContactById(Long id) {
+        return findById(id);
+    }
+
+    @Override
     default Optional<Contact> updateContact(Contact contact) {
         return (contact.getId() == null) ?
                 Optional.empty() :

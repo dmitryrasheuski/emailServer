@@ -65,10 +65,14 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> getContacts(String email) {
-        Optional<Contact> optionalContact = contactDao.getContactByEmail(email);
-        List<Contact> contacts = new ArrayList<>();
-        optionalContact.ifPresent(contacts::add);
-        return contacts;
+        return getContact( new Contact(email) );
+    }
+
+    @Override
+    public List<Contact> getContact(Long id) {
+        Contact contact = new Contact();
+        contact.setId(id);
+        return getContact(contact);
     }
 
     @Override
@@ -81,5 +85,17 @@ public class ContactServiceImpl implements ContactService {
         return (contact.getId() != null) ?
                 contactDao.updateContact(contact) :
                 Optional.empty();
+    }
+
+    List<Contact> getContact(Contact contact) {
+        Optional<Contact> optionalContact = Optional.empty();
+        if ( contact.getId() != null ) {
+            optionalContact = contactDao.getContactById( contact.getId() );
+        } else if ( contact.getEmail() != null ) {
+            optionalContact = contactDao.getContactByEmail( contact.getEmail() );
+        }
+        List<Contact> contacts = new ArrayList<>();
+        optionalContact.ifPresent(contacts::add);
+        return contacts;
     }
 }

@@ -27,11 +27,13 @@ public class ContactController {
                 ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<Contact>> getContacts(
             @RequestParam(required = false) String groupId,
             @RequestParam(required = false) String groupTitle,
-            @RequestParam(required = false) String email
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String id
+
     ) {
 
         List<Contact> contacts = null;
@@ -44,6 +46,8 @@ public class ContactController {
             contacts = contactService.getContacts(group);
         } else if ( email != null ) {
             contacts = contactService.getContacts(email);
+        } else if (id != null) {
+            contacts = contactService.getContact(Long.parseLong(id));
         } else {
             contacts = contactService.getContacts();
         }
